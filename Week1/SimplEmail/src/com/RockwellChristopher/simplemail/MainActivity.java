@@ -33,12 +33,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Html.ImageGetter;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,61 +109,6 @@ public class MainActivity extends Activity {
 	    Intent intent = getIntent();
 	    String action = intent.getAction();
 	    String type = intent.getType();
-	    
-	    // initialize image getters for each smiley
-	    final ImageGetter imageGetter = new ImageGetter() { 
-	    	public Drawable getDrawable(String source) { 
-	    		Drawable d = getResources().getDrawable( 
-	    				R.drawable.smile_sm); 
-	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
-	    		return d; 
-	    	} 
-	    }; 
-	    
-	    final ImageGetter imageGetter2 = new ImageGetter() { 
-	    	public Drawable getDrawable(String source) { 
-	    		Drawable d = getResources().getDrawable( 
-	    				R.drawable.smile2_sm); 
-	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
-	    		return d; 
-	    	} 
-	    };
-	    
-	    final ImageGetter imageGetter3 = new ImageGetter() { 
-	    	public Drawable getDrawable(String source) { 
-	    		Drawable d = getResources().getDrawable( 
-	    				R.drawable.smile3_sm); 
-	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
-	    		return d; 
-	    	} 
-	    };
-	    
-	    final ImageGetter imageGetter4 = new ImageGetter() { 
-	    	public Drawable getDrawable(String source) { 
-	    		Drawable d = getResources().getDrawable( 
-	    				R.drawable.smile4_sm); 
-	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
-	    		return d; 
-	    	} 
-	    };
-	    
-	    final ImageGetter imageGetter5 = new ImageGetter() { 
-	    	public Drawable getDrawable(String source) { 
-	    		Drawable d = getResources().getDrawable( 
-	    				R.drawable.smile5_sm); 
-	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
-	    		return d; 
-	    	} 
-	    };
-	    
-	    final ImageGetter imageGetter6 = new ImageGetter() { 
-	    	public Drawable getDrawable(String source) { 
-	    		Drawable d = getResources().getDrawable( 
-	    				R.drawable.smile6_sm); 
-	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
-	    		return d; 
-	    	} 
-	    };
 
 	    if (Intent.ACTION_SEND.equals(action) && type != null) {
 	        if ("text/plain".equals(type)) {
@@ -187,14 +128,8 @@ public class MainActivity extends Activity {
 		smiley1.setOnClickListener(new View.OnClickListener() {
 			
             public void onClick(View v) {
-            	// add emoji/smiley to email
-            	Spanned cs = Html.fromHtml( 
-            			"<img src='" 
-            			+ getResources() 
-            			.getDrawable(R.drawable.smile_sm) 
-            			+ "'/>", imageGetter, null); 
-            	msgEdit.append(" ");
-            	msgEdit.append(cs);
+            	// add emoji/smiley to email 
+            	msgEdit.append("😁");
             }
         });
 		
@@ -202,27 +137,15 @@ public class MainActivity extends Activity {
 
 			public void onClick(View v) {
 				// add emoji/smiley to email
-				Spanned cs = Html.fromHtml( 
-						"<img src='" 
-								+ getResources() 
-								.getDrawable(R.drawable.smile2_sm) 
-								+ "'/>", imageGetter2, null); 
-				msgEdit.append(" ");
-				msgEdit.append(cs);
+				msgEdit.append("😔");
 			}
 		});
 
 		smiley3.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				// add emoji/smiley to email
-				Spanned cs = Html.fromHtml( 
-						"<img src='" 
-								+ getResources() 
-								.getDrawable(R.drawable.smile3_sm) 
-								+ "'/>", imageGetter3, null); 
-				msgEdit.append(" ");
-				msgEdit.append(cs);
+				// add emoji/smiley to email 
+				msgEdit.append("😭");
 			}
 		});
 
@@ -230,41 +153,23 @@ public class MainActivity extends Activity {
 
 			public void onClick(View v) {
 				// add emoji/smiley to email
-				Spanned cs = Html.fromHtml( 
-						"<img src='" 
-								+ getResources() 
-								.getDrawable(R.drawable.smile4_sm) 
-								+ "'/>", imageGetter4, null); 
-				msgEdit.append(" ");
-				msgEdit.append(cs);
+				msgEdit.append("😉");
 			}
 		});
 
 		smiley5.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				// add emoji/smiley to email
-				Spanned cs = Html.fromHtml( 
-						"<img src='" 
-								+ getResources() 
-								.getDrawable(R.drawable.smile5_sm) 
-								+ "'/>", imageGetter5, null); 
-				msgEdit.append(" ");
-				msgEdit.append(cs);
+				// add emoji/smiley to email 
+				msgEdit.append("😖");
 			}
 		});
 		
 		smiley6.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				// add emoji/smiley to email
-				Spanned cs = Html.fromHtml( 
-						"<img src='" 
-								+ getResources() 
-								.getDrawable(R.drawable.smile6_sm) 
-								+ "'/>", imageGetter6, null); 
-				msgEdit.append(" ");
-				msgEdit.append(cs);
+				// add emoji/smiley to email 
+				msgEdit.append("😡");
 			}
 		});
    
@@ -274,7 +179,7 @@ public class MainActivity extends Activity {
 	    String sharedText = intent.getStringExtra(Intent.EXTRA_EMAIL);
 	    if (sharedText != null) {
 	        // Update UI to reflect text being shared
-	    	toEdit.setText(sharedText);
+	    	fromEdit.setText(sharedText);
 	    }
 	}
 	
