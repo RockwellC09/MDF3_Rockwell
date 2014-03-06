@@ -9,5 +9,7 @@
     <string name="sbj">Subject:</string>
     <string name="msg">Message:</string>
     <string name="send">Send Email</string>
+    <string name="smiley">smiley</string>
+    <string name="emoji">Add Emoji: </string>
 
 </resources>

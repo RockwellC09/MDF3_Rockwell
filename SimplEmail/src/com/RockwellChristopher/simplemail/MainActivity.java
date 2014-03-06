@@ -16,6 +16,7 @@ package com.RockwellChristopher.simplemail;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -24,17 +25,24 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Html.ImageGetter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +59,12 @@ public class MainActivity extends Activity {
 	Button send;
 	Context context;
 	boolean hasError = false;
+	ImageButton smiley1;
+	ImageButton smiley2;
+	ImageButton smiley3;
+	ImageButton smiley4;
+	ImageButton smiley5;
+	ImageButton smiley6;
 	
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -74,17 +88,93 @@ public class MainActivity extends Activity {
 		sbjEdit = (EditText) findViewById(R.id.sbj_edit);
 		msgEdit = (EditText) findViewById(R.id.msg_edit);
 		
+		smiley1 = (ImageButton) findViewById(R.id.smiley1);
+		smiley2 = (ImageButton) findViewById(R.id.smiley2);
+		smiley3 = (ImageButton) findViewById(R.id.smiley3);
+		smiley4 = (ImageButton) findViewById(R.id.smiley4);
+		smiley5 = (ImageButton) findViewById(R.id.smiley5);
+		smiley6 = (ImageButton) findViewById(R.id.smiley6);
+		
 		// set custom fonts
 		Typeface customFont = Typeface.createFromAsset(getAssets(),"DroidSerif-Bold.ttf");
+		Typeface customFont2 = Typeface.createFromAsset(getAssets(), "Cambo-Regular.ttf");
+		
 		from.setTypeface(customFont);
 		to.setTypeface(customFont);
 		sbj.setTypeface(customFont);
 		msg.setTypeface(customFont);
 		send.setTypeface(customFont);
-		fromEdit.setTypeface(customFont);
-		toEdit.setTypeface(customFont);
-		sbjEdit.setTypeface(customFont);
-		msgEdit.setTypeface(customFont);
+		fromEdit.setTypeface(customFont2);
+		toEdit.setTypeface(customFont2);
+		sbjEdit.setTypeface(customFont2);
+		msgEdit.setTypeface(customFont2);
+		
+		// Get intent, action and MIME type
+	    Intent intent = getIntent();
+	    String action = intent.getAction();
+	    String type = intent.getType();
+	    
+	    // initialize image getters for each smiley
+	    final ImageGetter imageGetter = new ImageGetter() { 
+	    	public Drawable getDrawable(String source) { 
+	    		Drawable d = getResources().getDrawable( 
+	    				R.drawable.smile_sm); 
+	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
+	    		return d; 
+	    	} 
+	    }; 
+	    
+	    final ImageGetter imageGetter2 = new ImageGetter() { 
+	    	public Drawable getDrawable(String source) { 
+	    		Drawable d = getResources().getDrawable( 
+	    				R.drawable.smile2_sm); 
+	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
+	    		return d; 
+	    	} 
+	    };
+	    
+	    final ImageGetter imageGetter3 = new ImageGetter() { 
+	    	public Drawable getDrawable(String source) { 
+	    		Drawable d = getResources().getDrawable( 
+	    				R.drawable.smile3_sm); 
+	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
+	    		return d; 
+	    	} 
+	    };
+	    
+	    final ImageGetter imageGetter4 = new ImageGetter() { 
+	    	public Drawable getDrawable(String source) { 
+	    		Drawable d = getResources().getDrawable( 
+	    				R.drawable.smile4_sm); 
+	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
+	    		return d; 
+	    	} 
+	    };
+	    
+	    final ImageGetter imageGetter5 = new ImageGetter() { 
+	    	public Drawable getDrawable(String source) { 
+	    		Drawable d = getResources().getDrawable( 
+	    				R.drawable.smile5_sm); 
+	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
+	    		return d; 
+	    	} 
+	    };
+	    
+	    final ImageGetter imageGetter6 = new ImageGetter() { 
+	    	public Drawable getDrawable(String source) { 
+	    		Drawable d = getResources().getDrawable( 
+	    				R.drawable.smile6_sm); 
+	    		d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight()); 
+	    		return d; 
+	    	} 
+	    };
+
+	    if (Intent.ACTION_SEND.equals(action) && type != null) {
+	        if ("text/plain".equals(type)) {
+	        	// Handle text being sent
+	            handleSendText(intent);
+	        }
+	    }
 
 		send.setOnClickListener(new View.OnClickListener() {
 			
@@ -93,7 +183,99 @@ public class MainActivity extends Activity {
             	sendMail(toEdit.getText().toString(), sbjEdit.getText().toString(), msgEdit.getText().toString());
             }
         });
+		
+		smiley1.setOnClickListener(new View.OnClickListener() {
+			
+            public void onClick(View v) {
+            	// add emoji/smiley to email
+            	Spanned cs = Html.fromHtml( 
+            			"<img src='" 
+            			+ getResources() 
+            			.getDrawable(R.drawable.smile_sm) 
+            			+ "'/>", imageGetter, null); 
+            	msgEdit.append(" ");
+            	msgEdit.append(cs);
+            }
+        });
+		
+		smiley2.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				// add emoji/smiley to email
+				Spanned cs = Html.fromHtml( 
+						"<img src='" 
+								+ getResources() 
+								.getDrawable(R.drawable.smile2_sm) 
+								+ "'/>", imageGetter2, null); 
+				msgEdit.append(" ");
+				msgEdit.append(cs);
+			}
+		});
+
+		smiley3.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				// add emoji/smiley to email
+				Spanned cs = Html.fromHtml( 
+						"<img src='" 
+								+ getResources() 
+								.getDrawable(R.drawable.smile3_sm) 
+								+ "'/>", imageGetter3, null); 
+				msgEdit.append(" ");
+				msgEdit.append(cs);
+			}
+		});
+
+		smiley4.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				// add emoji/smiley to email
+				Spanned cs = Html.fromHtml( 
+						"<img src='" 
+								+ getResources() 
+								.getDrawable(R.drawable.smile4_sm) 
+								+ "'/>", imageGetter4, null); 
+				msgEdit.append(" ");
+				msgEdit.append(cs);
+			}
+		});
+
+		smiley5.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				// add emoji/smiley to email
+				Spanned cs = Html.fromHtml( 
+						"<img src='" 
+								+ getResources() 
+								.getDrawable(R.drawable.smile5_sm) 
+								+ "'/>", imageGetter5, null); 
+				msgEdit.append(" ");
+				msgEdit.append(cs);
+			}
+		});
+		
+		smiley6.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
+				// add emoji/smiley to email
+				Spanned cs = Html.fromHtml( 
+						"<img src='" 
+								+ getResources() 
+								.getDrawable(R.drawable.smile6_sm) 
+								+ "'/>", imageGetter6, null); 
+				msgEdit.append(" ");
+				msgEdit.append(cs);
+			}
+		});
    
+	}
+	
+	void handleSendText(Intent intent) {
+	    String sharedText = intent.getStringExtra(Intent.EXTRA_EMAIL);
+	    if (sharedText != null) {
+	        // Update UI to reflect text being shared
+	    	toEdit.setText(sharedText);
+	    }
 	}
 	
 	private Message createMessage(String email, String subject, String messageBody, Session session) throws MessagingException, UnsupportedEncodingException {
