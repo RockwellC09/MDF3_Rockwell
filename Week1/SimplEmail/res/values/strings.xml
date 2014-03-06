@@ -4,5 +4,10 @@
     <string name="app_name">SimplEmail</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="sbj">Subject:</string>
+    <string name="msg">Message:</string>
+    <string name="send">Send Email</string>
 
 </resources>

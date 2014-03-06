@@ -1,16 +1,132 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
+    <RelativeLayout
+        android:id="@+id/RelativeLayout02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/to_edit"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:text="@string/to"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color" />
+
+        <EditText
+            android:id="@+id/to_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/to"
+            android:ems="10"
+            android:inputType="text|textEmailAddress" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/from_edit"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:text="@string/from"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color" />
+
+        <EditText
+            android:id="@+id/from_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/from"
+            android:ems="10"
+            android:inputType="text|textEmailAddress" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp" >
+
+        <TextView
+            android:id="@+id/sbj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/sbj_edit"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
+            android:text="@string/sbj"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color" />
+
+        <EditText
+            android:id="@+id/sbj_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/sbj"
+            android:ems="10"
+            android:inputType="text|textEmailSubject" >
+
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
     <TextView
+        android:id="@+id/msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/msg"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/text_color" />
 
-</RelativeLayout>
+    <EditText
+        android:id="@+id/msg_edit"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/tv_bg"
+        android:ems="10"
+        android:gravity="top|left"
+        android:inputType="text"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="127dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/text_color"
+        android:text="@string/send"
+        android:textColor="@color/bg_color"
+        android:textSize="20sp" />
+
+</LinearLayout>
