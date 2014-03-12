@@ -1,4 +1,4 @@
-package com.RockwellChristopher.phonedoctor;
+package com.RockwellChristopher.statistician;
 
 import android.os.Bundle;
 import android.app.Activity;
