@@ -28,7 +28,7 @@ import android.support.v4.app.NotificationCompat;
 
 public class BatteryService extends Service {
 
-	BroadcastReceiver receiver;
+	static BroadcastReceiver receiver;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -36,6 +36,13 @@ public class BatteryService extends Service {
 		return null;
 	}
 	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		this.unregisterReceiver(receiver);
+		super.onDestroy();
+	}
+
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
@@ -46,7 +53,7 @@ public class BatteryService extends Service {
 			public void onReceive(Context context, Intent intent) {
 				// TODO Auto-generated method stub
 				int battery = getBattery();
-				if (battery < 25) {
+				if (battery <= 25) {
 					serviceStopped();
 					stopService();
 				} else if (battery == 50){
