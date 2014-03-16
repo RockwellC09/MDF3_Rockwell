@@ -7,7 +7,7 @@
  * 
  * 	File: 		MainActivity.java
  * 
- *	Purpose:	This activity will get the current status of the phone and the battery and output it to the user.
+ *	Purpose:	This activity will get the current status of and the battery and output it to the user and display a battery tips video.
  * 
  */
 
@@ -22,45 +22,38 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 public class MainActivity extends Activity implements OnClickListener {
 
 	TextView batteryTv;
-	TextView phoneTv;
-	TextView networkTv;
 	TextView batteryTvTitle;
-	TextView phoneTvTitle;
-	TextView networkTvTitle;
+	TextView tipTv;
 	static TextView serviceTV;
 	Button startBtn;
+	Button playVidBtn;
+	Button pauseBtn;
 	static Button stopBtn;
 	Context context;
 	TelephonyManager telManager;
-	PhoneStateListener phoneStateLis;
-	int numRings = 0;
-	String stateStr = "N/A";
-	String typeStr = "N/A";
-	String inNum = "N/A";
-	String connStr = "Off";
-	int phoneType;
 	BroadcastReceiver batReceiver;
 	IntentFilter intentFil;
 	Intent batteryIntent;
 	int percentage;
 	private static final String PREF_IS_RUNNING = "RUN";
+	VideoView batVid;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,31 +63,31 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		// initialize view elements
 		batteryTv = (TextView) findViewById(R.id.textView1);
-		phoneTv = (TextView) findViewById(R.id.textView2);
-		networkTv = (TextView) findViewById(R.id.textView3);
 		batteryTvTitle = (TextView) findViewById(R.id.TextViewTitle1);
-		phoneTvTitle = (TextView) findViewById(R.id.TextViewTitle2);
-		networkTvTitle = (TextView) findViewById(R.id.TextViewTitle3);
+		tipTv = (TextView) findViewById(R.id.tips_tv);
 		serviceTV = (TextView) findViewById(R.id.service_tv);
 		startBtn = (Button) findViewById(R.id.start);
 		stopBtn = (Button) findViewById(R.id.stop);
+		pauseBtn = (Button) findViewById(R.id.pause_video);
+		playVidBtn = (Button) findViewById(R.id.play_video);
 
 		// set custom font
-		Typeface customFont = Typeface.createFromAsset(getAssets(),
-				"SigmarOne.ttf");
+		Typeface customFont = Typeface.createFromAsset(getAssets(),"SigmarOne.ttf");
 		batteryTv.setTypeface(customFont);
-		phoneTv.setTypeface(customFont);
-		networkTv.setTypeface(customFont);
 		batteryTvTitle.setTypeface(customFont);
-		phoneTvTitle.setTypeface(customFont);
-		networkTvTitle.setTypeface(customFont);
+		tipTv.setTypeface(customFont);
 		serviceTV.setTypeface(customFont);
 		startBtn.setTypeface(customFont);
 		stopBtn.setTypeface(customFont);
+		pauseBtn.setTypeface(customFont);
+		playVidBtn.setTypeface(customFont);
+		
 
 		// add click listeners to start and stop buttons
 		startBtn.setOnClickListener(this);
 		stopBtn.setOnClickListener(this);
+		pauseBtn.setOnClickListener(this);
+		playVidBtn.setOnClickListener(this);
 
 		// check preference to see if service was set to running
 		if (isRunning(context)) {
@@ -131,54 +124,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		// register receiver
 		intentFil = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
 		batteryIntent = this.registerReceiver(batReceiver, intentFil);
-
-		// setup telephone manager
-		telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-
-		phoneStateLis = new PhoneStateListener() {
-			@Override
-			public void onCallStateChanged(int state, String incomingNumber) {
-
-				phoneType = telManager.getPhoneType();
-				// get phone type
-				if (phoneType == TelephonyManager.PHONE_TYPE_CDMA) {
-					typeStr = "CDMA";
-				} else if (phoneType == TelephonyManager.PHONE_TYPE_GSM) {
-					typeStr = "GSM";
-				} else if (phoneType == TelephonyManager.PHONE_TYPE_SIP) {
-					typeStr = "SIP";
-				}
-
-				// get phone state
-				if (state == TelephonyManager.CALL_STATE_IDLE) {
-					stateStr = "Idle";
-				} else if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
-					stateStr = "On a Call";
-				} else if (state == TelephonyManager.CALL_STATE_RINGING) {
-					stateStr = "Ringing";
-					numRings++;
-				}
-
-				if (incomingNumber.length() > 1) {
-					inNum = incomingNumber;
-				}
-
-				phoneTv.setText(Html
-						.fromHtml("<font color=\"#545454\"><b>Phone Type: </b></font>"
-								+ typeStr
-								+ "<br /><font color=\"#545454\"><b>Phone State: </b></font>"
-								+ stateStr
-								+ "<br />"
-								+ "<font color=\"#545454\"><b>Incoming Number: </b></font>"
-								+ inNum
-								+ "<br />"
-								+ "<font color=\"#545454\"><b>Rang: </b></font>"
-								+ numRings + " times"));
-			}
-		};
-
-		// add listener
-		telManager.listen(phoneStateLis, PhoneStateListener.LISTEN_CALL_STATE);
+		
+		// set up video
+		batVid = (VideoView) findViewById(R.id.videoView1);
+		String uriPath = "android.resource://" + getPackageName() + "/" + R.raw.battery_tips;
+		batVid.setVideoURI(Uri.parse(uriPath));
+		batVid.setMediaController(new MediaController(context));
+	    
 	}
 
 	// get batter health string base on the INT given by EXTRA_HEALTH i from the
@@ -212,13 +164,6 @@ public class MainActivity extends Activity implements OnClickListener {
 
 		return healthStr;
 
-	}
-
-	@Override
-	public void onResume() {
-		// get connection status
-		getConnectionInfo();
-		super.onResume();
 	}
 
 	// get the current battery information and output it to the user
@@ -292,6 +237,12 @@ public class MainActivity extends Activity implements OnClickListener {
 				}
 			}
 
+		} else if (v == playVidBtn) {
+			// play video
+			batVid.start();
+		} else if (v == pauseBtn) {
+			// pause video
+			batVid.pause();
 		}
 	}
 
@@ -310,21 +261,5 @@ public class MainActivity extends Activity implements OnClickListener {
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(ctx.getApplicationContext());
 		return pref.getBoolean(PREF_IS_RUNNING, false);
-	}
-
-	private void getConnectionInfo() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-		boolean isMobile = ni.isConnected();
-
-		if (isMobile) {
-			connStr = "On";
-		} else {
-			connStr = "Off";
-		}
-
-		networkTv.setText(Html
-				.fromHtml("<font color=\"#545454\"><b>Mobile Data: </b></font>"
-						+ connStr));
 	}
 }
