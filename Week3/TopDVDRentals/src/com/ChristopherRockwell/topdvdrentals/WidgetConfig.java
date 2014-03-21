@@ -1,6 +1,7 @@
 package com.ChristopherRockwell.topdvdrentals;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,6 +72,11 @@ public class WidgetConfig extends Activity implements OnClickListener {
 				int widgetID = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 				
 				if (widgetID != AppWidgetManager.INVALID_APPWIDGET_ID) {
+
+			        Intent intent = new Intent(this, MainActivity.class);
+			        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+			        remoteV.setOnClickPendingIntent(R.id.wid_img, pendingIntent);
 					
 					AppWidgetManager.getInstance(this).updateAppWidget(widgetID, remoteV);
 					
