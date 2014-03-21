@@ -10,7 +10,7 @@ import com.ChristopherRockwell.topdvdrentals.getMovies.getData;
 public class WidgetProvider extends AppWidgetProvider {
 
 	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {		
 		
 		// get top rentals again
 		if (getMovies.connectionStatus(context)){

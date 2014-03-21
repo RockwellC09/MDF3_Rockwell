@@ -117,8 +117,7 @@ public class MainActivity extends Activity implements OnClickListener, RentalsFr
 		} else {
 			setContentView(R.layout.main_fragment);
 		}
-
-
+		
 		getRentalsBtn = (Button) this.findViewById(R.id.rentalsBtn);
 		srcButton = (Button) this.findViewById(R.id.srcBtn);
 		getRentalsBtn.setOnClickListener(this);

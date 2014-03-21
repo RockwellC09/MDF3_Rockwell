@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -40,7 +39,6 @@ public class WidgetConfig extends Activity implements OnClickListener {
             {
                 RadioButton checkedRadioButton = (RadioButton) findViewById(checkedId);
                 radioText = checkedRadioButton.getText().toString();
-                Log.i("Radio Text:", radioText);
                 
                 if (radioText.equals("Blue")) {
                 	remoteV.setTextColor(R.id.wid_crit, getResources().getColor(R.color.btn_color3));
