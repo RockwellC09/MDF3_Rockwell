@@ -20,12 +20,12 @@
     <string name="prefs">Preferneces</string>
     <string name="alert">Search by Minimum Critic Rating</string>
     <string name="chang_color">Change Colors</string>
-    <string name="title_activity_widget_config">Configure Transition Speed</string>
-    <string name="trans_speed">Transition Speed</string>
-    <string name="slow">Slow</string>
-    <string name="med">Medium</string>
-    <string name="fast">Fast</string>
-    <string name="set">Set Transition Speed</string>
+    <string name="title_activity_widget_config">Configure Text Color</string>
+    <string name="wid_tv">Change Text Color</string>
+    <string name="blue">Blue</string>
+    <string name="purple">Purple</string>
+    <string name="set">Set Text Color</string>
     <string name="wid_img">Widget Image</string>
+    <string name="def">Default</string>
 
 </resources>

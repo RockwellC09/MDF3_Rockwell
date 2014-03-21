@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:checked="true"
-            android:text="@string/slow"
+            android:text="@string/def"
             android:textColor="@color/btn_color"
             android:textSize="20sp" />
 
@@ -33,42 +33,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="@string/med"
-            android:textColor="@color/btn_color"
+            android:text="@string/blue"
+            android:textColor="@color/btn_color3"
             android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fast"
-            android:textColor="@color/btn_color"
+            android:text="@string/purple"
+            android:textColor="@color/btn_color2"
             android:textSize="20sp" />
 
     </RadioGroup>
 
     <TextView
-        android:id="@+id/trans_tv"
+        android:id="@+id/color_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:text="@string/trans_speed"
+        android:text="@string/wid_tv"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/btn_color"
         android:textSize="22sp" />
 
     <Button
-        android:id="@+id/trans_btn"
+        android:id="@+id/color_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/trans_radio"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="46dp"
+        android:background="@color/btn_color"
         android:padding="15dp"
         android:text="@string/set"
-        android:textColor="@color/btn_color"
+        android:textColor="@android:color/white"
         android:textSize="24sp" />
 
 </RelativeLayout>

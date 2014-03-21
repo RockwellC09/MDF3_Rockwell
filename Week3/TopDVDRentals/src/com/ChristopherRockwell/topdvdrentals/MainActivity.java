@@ -97,6 +97,7 @@ public class MainActivity extends Activity implements OnClickListener, RentalsFr
 	static int selectRadio;
 	static EditText fName;
 	static EditText lName;
+	static boolean parse = true;
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -419,7 +420,7 @@ public class MainActivity extends Activity implements OnClickListener, RentalsFr
 					}
 
 					// if the write data works, read the the data
-					if (writeWorks) {
+					if (writeWorks && parse) {
 						readParse();
 					}
 					return true;
