@@ -70,3 +70,15 @@ input[type=button] {
         color: white;
 }
 
+#btn {
+        display: inline;
+        float: left;
+        clear: none;
+        margin-right: 10px;
+}
+
+#btndiv {
+        display: block;
+        clear: left;
+}
+

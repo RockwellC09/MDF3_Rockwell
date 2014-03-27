@@ -40,7 +40,13 @@ public class MainActivity extends Activity {
 		WebSettings webSettings = myWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		myWebView.addJavascriptInterface(new WebAppInterface(this), "JSInterface");
-		myWebView.loadUrl("file:///android_asset/home.html");
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		if (prefs.getString("first", "").equals("")) {
+			myWebView.loadUrl("file:///android_asset/home.html");
+		} else {
+			myWebView.loadUrl("file:///android_asset/info.html");
+		}
+		
 	}
 	
 	public class WebAppInterface {
@@ -68,21 +74,34 @@ public class MainActivity extends Activity {
 	    
 	    @JavascriptInterface
 	    public void getData() {
-	    	SharedPreferences prefs = PreferenceManager
-					.getDefaultSharedPreferences(context.getApplicationContext());
+	    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 			String first = prefs.getString("first", "");
 			String last = prefs.getString("last", "");
 			String address = prefs.getString("address", "");
 			String number = prefs.getString("number", "");
 			
 			myWebView.loadUrl("javascript:setData('" + first + "," + last + "," + address + "," + number + "')");
-			
-			Toast.makeText(context, first  + " " + last + " " + address + " " + number, Toast.LENGTH_LONG).show();
 	    }
 	    
 	    @JavascriptInterface
 	    public void showToast() {
 	    	Toast.makeText(context, "It Works!!", Toast.LENGTH_LONG).show();
+	    }
+	    
+	    // go back to home.html for user to edit their information
+	    @JavascriptInterface
+	    public void editData() {
+	    	myWebView.goBack();
+	    }
+	    
+	    // delete shared preferences data
+	    @JavascriptInterface
+	    public void deleteData() {
+	    	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	    	SharedPreferences.Editor editor = prefs.edit();
+	    	editor.clear();
+	    	editor.commit();
+	    	myWebView.loadUrl("file:///android_asset/home.html");
 	    }
 	    
 	}

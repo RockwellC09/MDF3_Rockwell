@@ -3,7 +3,6 @@ jQuery(function($){
 });
 
 function setData(str) {
-        JSInterface.showToast();
         var values = str.split(',');
         $('#first_info').text(values[0]);
         $('#last_info').text(values[1]);
