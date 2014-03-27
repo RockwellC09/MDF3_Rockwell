@@ -15,8 +15,10 @@
 package com.RockwellChristopher.ownerinfo;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
@@ -24,16 +26,21 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	WebView myWebView;
+	boolean hasErrors = false;
+	Context context;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		context = this;
 		
-		WebView myWebView = (WebView) findViewById(R.id.webview);
-		myWebView.addJavascriptInterface(new WebAppInterface(this), "JSInterface");
+		myWebView = (WebView) findViewById(R.id.webview);
 		WebSettings webSettings = myWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
+		myWebView.addJavascriptInterface(new WebAppInterface(this), "JSInterface");
+		myWebView.loadUrl("file:///android_asset/home.html");
 	}
 	
 	public class WebAppInterface {
@@ -44,10 +51,38 @@ public class MainActivity extends Activity {
 	        mContext = c;
 	    }
 
-	    /** Show a toast from the web page */
+	    // save user info data
 	    @JavascriptInterface
-	    public void showToast(String toast) {
-	        Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+	    public void saveData(String firstname, String lastname, String address, String number) {
+	    	SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+			SharedPreferences.Editor editor = pref.edit();
+
+			editor.putString("first", firstname);
+			editor.putString("last", lastname);
+			editor.putString("address", address);
+			editor.putString("number", number);
+			editor.apply();
+			
+			myWebView.loadUrl("file:///android_asset/info.html");
+	    }
+	    
+	    @JavascriptInterface
+	    public void getData() {
+	    	SharedPreferences prefs = PreferenceManager
+					.getDefaultSharedPreferences(context.getApplicationContext());
+			String first = prefs.getString("first", "");
+			String last = prefs.getString("last", "");
+			String address = prefs.getString("address", "");
+			String number = prefs.getString("number", "");
+			
+			myWebView.loadUrl("javascript:setData('" + first + "," + last + "," + address + "," + number + "')");
+			
+			Toast.makeText(context, first  + " " + last + " " + address + " " + number, Toast.LENGTH_LONG).show();
+	    }
+	    
+	    @JavascriptInterface
+	    public void showToast() {
+	    	Toast.makeText(context, "It Works!!", Toast.LENGTH_LONG).show();
 	    }
 	    
 	}
