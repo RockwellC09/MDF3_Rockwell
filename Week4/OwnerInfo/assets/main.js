@@ -1,14 +1,20 @@
 jQuery(function($){
-   $("#num").mask("(999) 999-9999");
-   $("#errors").hide();
+        $("#errors").hide();
+        $("#num").mask("(999) 999-9999");
+        JSInterface.getDataInput();
 });
 
-function populate() {
-        
+/* populate input fields with stored data */
+function setDataInput(str) {
+        var values = str.split(',');
+        $('#first').val(values[0]);
+        $('#last').val(values[1]);
+        $('#adr').val(values[2]);
+        $('#num').val(values[3]);
 }
 
 function checkData () {
-        /* check for black fields */
+        /* check for blank fields */
         $("#errors").empty();
         var firstField = document.getElementById("first");
         var lastField = document.getElementById("last");
@@ -20,8 +26,7 @@ function checkData () {
                 $("#errors").append("<p>Please enter your first name.</p>");
                 hasErrors = true;
         } else {
-                firstField.style.borderColor = "#C36146"; 
-                hasErrors = false;          
+                firstField.style.borderColor = "#C36146";          
         }
         if (lastField.value.trim() == "") {
                 lastField.style.borderColor = "red";
@@ -29,7 +34,6 @@ function checkData () {
                 hasErrors = true;
         } else {
                 lastField.style.borderColor = "#C36146";  
-                hasErrors = false;
         }
         if (addressField.value.trim() == "") {
                 addressField.style.borderColor = "red";
@@ -37,15 +41,14 @@ function checkData () {
                 hasErrors = true;
         } else {
                 addressField.style.borderColor = "#C36146"; 
-                hasErrors = false;
         }
-        if (numField.value.trim() == "" || numField.value.length > 14) {
+        if (numField.value.trim() == 0) {
                 numField.style.borderColor = "red";
                 $("#errors").append("<p>Please enter a valid phone number.</p>");
+                console.log(numField.value.length);
                 hasErrors = true;
         } else {
                 numField.style.borderColor = "#C36146"; 
-                hasErrors = false;
         } 
         
         if (!hasErrors) {
@@ -53,6 +56,16 @@ function checkData () {
                 JSInterface.saveData(firstField.value, lastField.value, addressField.value, numField.value);
         } else {
                 $("#errors").show();
+                hasErrors = false;
         }
                   
+}
+
+/* show or hide the info message */
+function showHide() {
+        if ($(".bubble").is(":visible") ) {
+                $(".bubble").slideUp();
+        } else {
+                $(".bubble").slideDown()
+        }
 }

@@ -11,8 +11,11 @@
         <label>First name:</label> <input type="text" name="fname" id="first"><br>
         <label> Last name: </label><input type="text" name="lname" id="last"><br>
         <label>Address: </label><input type="text" name="address" id="adr"><br>
-        <label>Phone Number: </label><input type="text" name="phone" id="num"><br>
-        <input type="button" value="Save"  onClick="checkData()">
+        <label>Phone Number: </label><input type="text" name="phone" id="num">
+        <img src="info.png" id="pic" height="38" width="38" onclick="showHide()" /><br />
+        <div class="bubble" style="display:none">Choose an alternate number to be reached at if this is a mobile phone.</div>
+        <input type="button" value="Save Info" id="saveBtn"  onClick="checkData()">
+        <input type="button" value="Share App" id="shareBtn"  onClick="JSInterface.shareApp()">
         </form>
 
 <script src="jquery.js" type="text/javascript"></script>

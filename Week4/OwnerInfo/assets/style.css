@@ -70,15 +70,83 @@ input[type=button] {
         color: white;
 }
 
-#btn {
+#btn, #btn2 {
         display: inline;
         float: left;
         clear: none;
         margin-right: 10px;
 }
+#saveBtn {
+        position: fixed;
+        display: block;
+        width: 150px;
+}
+
+#shareBtn {
+        background: #C36146;
+        color: #441D13;
+        position: fixed;
+        display: block;
+        margin-top: 70px;
+        width: 150px;
+}
+
+img #pic {
+        display: inline-block;
+        float: left;
+        clear: left;
+}
+
+#num {
+        float: left; 
+        margin-right: 10px;
+        width: 100px;
+        font-size: 12px;
+}
 
 #btndiv {
         display: block;
         clear: left;
+}
+
+.bubble {
+        color: #8F432F;
+        position: relative;
+        width: 130px;
+        margin-left: -40px;
+        float: left;
+        padding: 5px;
+        background: #F8FFFF;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        clear: right;
+        border-radius: 10px;
+        border: #C36146 solid 3px;
+}
+
+.bubble:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 0 15px 15px;
+        border-color: #F8FFFF transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        top: -15px;
+        left: 40px;
+}
+
+.bubble:before {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 0 17px 17px;
+        border-color: #C36146 transparent;
+        display: block;
+        width: 0;
+        z-index: 0;
+        top: -20px;
+        left: 38px;
 }
 
